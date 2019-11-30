@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<title>Book Recommender</title>
+
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+	<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+
+	<script type="text/javascript">
+		$(function() {
+			$("#autocomplete").autocomplete({
+				source: function(request, response) {
+					$.getJSON("{{url_for('autocomplete')}}", {
+						q: request.term,
+					}, function(data) {
+						response(data.matching_results);
+					});
+				},
+				minLength: 2,
+				select: function(event, ui) {
+					console.log(ui.item.value);
+				}
+			});
+		});
+	</script>
+
+	<style type="text/css">
+		@import url(https://fonts.googleapis.com/css?family=Raleway:400,500);
+		* {
+		  margin: 0;
+		  padding: 0;
+		  list-style: none;
+		  vertical-align: baseline;
+		}
+
+		div {
+		  position: relative;
+		  z-index: 2;
+		}
+
+		body {
+		  background-color: #333;
+		  color: #333;
+		  font-family: 'Raleway', sans-serif;
+		  font-weight: 400;
+		}
+
+		.quote-box {
+		  border-radius: 10px;
+		  position: relative;
+		  margin: 8% auto auto auto;
+		  width: 450px;
+		  max-width: 70vw;
+		  padding: 40px 50px;
+		  display: table;
+		  background-color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div class="quote-box">
+		<div>
+			<input type="text" name="autocomplete" id="autocomplete", class="form-control input-lg">
+		</div>
+	</div>
+</body>
+</html>
