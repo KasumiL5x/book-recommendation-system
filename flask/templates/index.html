@@ -7,31 +7,13 @@
 	<meta name="author" content="" />
 	<title>Book Recommender</title>
 
-	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-	<link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-	<script src="http://code.jquery.com/jquery-2.2.0.min.js"></script>
-	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
-
-	<script type="text/javascript">
-		$(function() {
-			$("#autocomplete").autocomplete({
-				source: function(request, response) {
-					$.getJSON("{{url_for('autocomplete')}}", {
-						q: request.term,
-					}, function(data) {
-						response(data.matching_results);
-					});
-				},
-				minLength: 2,
-				select: function(event, ui) {
-					console.log(ui.item.value);
-				}
-			});
-		});
-	</script>
+	<script src="{{ url_for('static', filename='js/jquery-3.4.1.min.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/jquery-ui.min.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/jquery-ui.min.css') }}" />
 
 	<style type="text/css">
-		@import url(https://fonts.googleapis.com/css?family=Raleway:400,500);
 		* {
 		  margin: 0;
 		  padding: 0;
@@ -55,9 +37,9 @@
 		  border-radius: 10px;
 		  position: relative;
 		  margin: 8% auto auto auto;
-		  width: 450px;
+		  width: 700px;
 		  max-width: 70vw;
-		  padding: 40px 50px;
+		  padding: 40px 35px;
 		  display: table;
 		  background-color: #fff;
 		}
@@ -65,13 +47,51 @@
 </head>
 <body>
 	<div class="quote-box">
-		<div>
-			<strong>Book name</strong>
-			<br/>
-			<input type="text" name="autocomplete" id="autocomplete" class="ui-widget ui-state-default ui-corner-all" style="width: 100%">
-			<br/>
-			<input class="ui-button ui-widget ui-corner-all" type="submit" value="Search">
-		</div>
+		<form id="bookForm">
+			<div class="form-group">
+				<label for="autocomplete">Book title</label>
+				<input type="text" class="form-control" id="bookTitle" autocomplete="off" placeholder="Search by title..." />
+			</div>
+			<button type="submit" class="btn btn-primary">Recommend</button>
+		</form>
+
+		<div id="bookResults"></div>
 	</div>
+
+	<script type="text/javascript">
+		$(function() {
+			$('#bookTitle').autocomplete({
+				source: function(req, res) {
+					$.getJSON("{{url_for('autocomplete')}}", {
+						q: req.term,
+					}, function(data) {
+						res(data.matching_results);
+					});
+				},
+				minLength: 2,
+				select: function(evt, ui) {
+					console.log(ui.item.value);
+				}
+			});
+
+			$('#bookForm').submit(function(e) {
+				e.preventDefault();
+
+				const searchText = $('#bookTitle').val();
+				$.ajax({
+					url: '/recommend',
+					type: 'get',
+					data: {jsdata: searchText},
+					success: function(res) {
+						alert('Success: ' + res)
+						$('#bookResults').html(res);
+					},
+					error: function(err) {
+						alert('Error: ' + err);
+					}
+				});
+			});
+		});
+	</script>
 </body>
 </html>
