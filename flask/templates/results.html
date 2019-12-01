@@ -1,5 +1,18 @@
-<label id="value_lable">
-    {% for book in recommendations %}
-        {{ book }}<br />
-    {% endfor %}
-</label>
+<div class="table-responsive">
+	<table class="table table-hover">
+		<thead class="thead-light">
+			<tr>
+				<th scope="col">Title</th>
+				<th scope="col">URL</th>
+			</tr>	
+		</thead>
+		<tbody>
+			{% for book in recommendations %}
+			<tr>
+				<td>{{ book['title'] }}</td>
+				<td><a href="{{ book['url'] }}" target="_blank">GoodReads page</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

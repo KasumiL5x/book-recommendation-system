@@ -2,6 +2,7 @@
 # https://stackoverflow.com/questions/34704997/jquery-autocomplete-in-flask
 # https://kite.com/python/docs/flask.jsonify
 
+import json
 import flask
 from api import BookSimilarity
 
@@ -25,14 +26,14 @@ def recommend():
 	
 	searchText = flask.request.args.get('jsdata')
 
-	output = []
+	output = ''
 	if searchText:
 		print(f'Search text: {searchText}')
 		results = booksim.recommend(searchText)
 		if results is not None:
-			output = results.title.values
-			print(output)
+			output = json.loads(results[['title', 'url']].to_json(orient='records'))#results.title.values
 
 	# TODO: Convert a fuller version to JSON rather than just an array (title, url, etc.) and render as a table instead.
 	# https://stackoverflow.com/questions/48050769/pandas-dataframe-to-flask-template-as-a-json
+	print(output)
 	return flask.render_template('results.html', recommendations=output)
