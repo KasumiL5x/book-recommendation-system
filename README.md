@@ -1,9 +1,7 @@
 # Book Recommendation System
-> A fullstack data science project to build a book recommendation system.
+> A fullstack(ish) data science project to build a book recommendation system.
 
-*NOTE: This project is still in progress, when I have time.*
-
-This project aims to create a book recommendation system.  It will target many areas of fullstack data science.  At a high level, the steps are:
+This project aims to create a book recommendation system.  It will target many areas of data science.  At a high level, the steps are:
 
 * Source data (create a web spider to parse online data)
 * Clean data (take scraped data and make it more useful)
@@ -22,3 +20,8 @@ We can view the [top 200 books](https://www.goodreads.com/book/popular_by_date/2
 
 ### Book awards
 GoodReads [hosts book awards](https://www.goodreads.com/award) and maintains lists of the previous winners.  We could pick a popular award category and trace it back through the years.
+
+## Deployment
+This project uses [Flask](https://palletsprojects.com/p/flask/) for deployment.  **It is not supposed to be a production-ready deployment, but a proof of concept for exporting the technology to a browser.**  Please see below for an example:
+
+![](./screenshots/hhgttg.gif)
