@@ -47,6 +47,7 @@
 </head>
 <body>
 	<div class="quote-box">
+		<h2 style="font-weight: 100;">Book Recommender</h2>
 		<form id="bookForm">
 			<div class="form-group">
 				<label for="autocomplete">Book title</label>
@@ -85,7 +86,7 @@
 					type: 'get',
 					data: {jsdata: searchText},
 					success: function(res) {
-						alert('Success: ' + res)
+						// alert('Success: ' + res)
 						$('#bookResults').html(res);
 					},
 					error: function(err) {
