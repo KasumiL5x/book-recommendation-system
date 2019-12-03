@@ -1,1 +1,2 @@
 scraper/test/*.html linguist-vendored
+flask/static/js/*.js linguist-vendored
